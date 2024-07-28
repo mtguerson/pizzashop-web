@@ -34,7 +34,7 @@ export function StoreProfileDialog() {
   const queryClient = useQueryClient()
 
   const { data: managedRestaurant } = useQuery({
-    queryKey: ['managedRestaurant'],
+    queryKey: ['managed-restaurant'],
     queryFn: GetManagedRestaurant,
     staleTime: Infinity,
   })
