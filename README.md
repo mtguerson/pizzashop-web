@@ -11,13 +11,6 @@ Dashboard para gestão do estabelecimento e controle de pedidos estilo iFood.
 - React Query
 - Radix
 
-## Aprendizados importantes
-
-- Autenticação JWT
-- Caching e revalidação
-- Conexão com back-end (API)
-- Testes unitários
-
 ## Funcionalidades
 
 - Cadastro de estabelecimento;
