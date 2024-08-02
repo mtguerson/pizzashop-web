@@ -1,4 +1,3 @@
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Search, X } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
@@ -14,13 +13,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-const orderFiltersSchema = z.object({
+const ordersFiltersSchema = z.object({
   orderId: z.string().optional(),
   customerName: z.string().optional(),
   status: z.string().optional(),
 })
 
-type OrderFiltersSchema = z.infer<typeof orderFiltersSchema>
+type OrderFiltersSchema = z.infer<typeof ordersFiltersSchema>
 
 export function OrderTableFilters() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -29,9 +28,8 @@ export function OrderTableFilters() {
   const customerName = searchParams.get('customerName')
   const status = searchParams.get('status')
 
-  const { register, handleSubmit, control, reset } =
+  const { register, handleSubmit, reset, control } =
     useForm<OrderFiltersSchema>({
-      resolver: zodResolver(orderFiltersSchema),
       defaultValues: {
         orderId: orderId ?? '',
         customerName: customerName ?? '',
@@ -39,40 +37,44 @@ export function OrderTableFilters() {
       },
     })
 
-  function handleFilter({ customerName, orderId, status }: OrderFiltersSchema) {
-    setSearchParams((state) => {
+  function handleFilter(data: OrderFiltersSchema) {
+    const orderId = data.orderId?.toString()
+    const customerName = data.customerName?.toString()
+    const status = data.status?.toString()
+
+    setSearchParams((prev) => {
       if (orderId) {
-        state.set('orderId', orderId)
+        prev.set('orderId', orderId)
       } else {
-        state.delete('orderId')
+        prev.delete('orderId')
       }
 
       if (customerName) {
-        state.set('customerName', customerName)
+        prev.set('customerName', customerName)
       } else {
-        state.delete('customerName')
+        prev.delete('customerName')
       }
 
       if (status) {
-        state.set('status', status)
+        prev.set('status', status)
       } else {
-        state.delete('status')
+        prev.delete('status')
       }
 
-      state.set('page', '1')
+      prev.set('page', '1')
 
-      return state
+      return prev
     })
   }
 
   function handleClearFilters() {
-    setSearchParams((state) => {
-      state.delete('orderId')
-      state.delete('customerName')
-      state.delete('status')
-      state.set('page', '1')
+    setSearchParams((prev) => {
+      prev.delete('orderId')
+      prev.delete('customerName')
+      prev.delete('status')
+      prev.set('page', '1')
 
-      return state
+      return prev
     })
 
     reset({
@@ -82,13 +84,14 @@ export function OrderTableFilters() {
     })
   }
 
+  const hasAnyFilter = !!orderId || !!customerName || !!status
+
   return (
     <form
       onSubmit={handleSubmit(handleFilter)}
       className="flex items-center gap-2"
     >
       <span className="text-sm font-semibold">Filtros:</span>
-
       <Input
         placeholder="ID do pedido"
         className="h-8 w-auto"
@@ -99,14 +102,12 @@ export function OrderTableFilters() {
         className="h-8 w-[320px]"
         {...register('customerName')}
       />
-
       <Controller
-        name="status"
         control={control}
+        name="status"
         render={({ field: { name, onChange, value, disabled } }) => {
           return (
             <Select
-              defaultValue="all"
               name={name}
               onValueChange={onChange}
               value={value}
@@ -134,10 +135,11 @@ export function OrderTableFilters() {
       </Button>
 
       <Button
-        onClick={handleClearFilters}
         type="button"
         variant="outline"
         size="xs"
+        disabled={!hasAnyFilter}
+        onClick={handleClearFilters}
       >
         <X className="mr-2 h-4 w-4" />
         Remover filtros
