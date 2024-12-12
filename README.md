@@ -1,8 +1,8 @@
 # PizzaShop (React)
 
-Dashboard para gestão do estabelecimento e controle de pedidos estilo iFood.
+Dashboard for managing the establishment and controlling orders, similar to iFood.
 
-## Ferramentas
+## Tools
 
 - React
 - React Router DOM
@@ -11,23 +11,22 @@ Dashboard para gestão do estabelecimento e controle de pedidos estilo iFood.
 - React Query
 - Radix
 
-## Funcionalidades
+## Features
 
-- Cadastro de estabelecimento;
-- Login de estabelecimento (magic link);
-- Cadastro como cliente;
-- Criação de novos pedidos;
-- Gestão do cardápio;
-- Gestão de avaliações;
-- Gestão de pedidos;
-- Gestão do perfil do estabelecimento;
-- Loja aberta/fechada;
-- Métricas p/ dashboard;
-  - Gráfico de pedidos nos últimos 15 dias;
-  - Gráfico de valores nos últimos 15 dias;
-  - Média de avaliações (mês/geral);
-  - Média de pedidos por dia (mês/geral);
-- Notificações sonoras de novos pedidos (alterar favicon);
+- Register establishment;
+- Establishment login (magic link);
+- Customer registration;
+- Create new orders;
+- Manage the menu;
+- Manage reviews;
+- Manage orders;
+- Manage the establishment profile;
+- Open/closed store status;
+  - Dashboard metrics:
+  - Orders graph for the last 15 days;
+  - Sales graph for the last 15 days;
+  - Average reviews (monthly/overall);
+- Average orders per day (monthly/overall);
 
 ## Screenshots
 
